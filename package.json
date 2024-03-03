@@ -1,6 +1,6 @@
 {
   "name": "wallet",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Simple BIP39 Ethereum Address Generator",
   "author": " Rookie <zxfgyu12345678@163.com>",
   "license": "MIT",
