@@ -1,5 +1,5 @@
 {
-  "name": "@reiyanyan/vue-camera",
+  "name": "@tea/wallet",
   "version": "1.3.0",
   "description": "Customizable camera library for Vue 3, within asking permission to user.",
   "main": "./dist/index.js",
@@ -19,12 +19,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/reiyanyan/vue-camera.git"
+    "url": "https://github.com/coderInGit/Wallet.git"
   },
   "bugs": {
-    "url": "https://github.com/reiyanyan/vue-camera/issues"
+    "url": "https://github.com/coderInGit/Wallet.git/issues"
   },
-  "author": "Rei Yan",
+  "author": "coderInGit",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.11.20",
