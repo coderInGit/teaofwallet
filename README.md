@@ -1,26 +1,114 @@
-# 以太坊地址钱包靓号生成器
-[English](https://github.com/BitBitKing/Wallet-Generate/blob/main/README.EN.md) | 简体中文
+# Vue Camera
 
-这是一个简单的BIP39以太坊地址钱包靓号生成器，可以指定位数和利用正则（比如结尾888）来生成靓号、助记词和私钥。
+Customizable camera library for Vue 3, within asking permission to user.
 
-## 安装
-- 先安装NodeJs，本地测试v20+没问题，低版本没测试 [NodeJs官网](https://nodejs.org/en)
-- git clone 本项目
+## Features
 
-## 用法
-- cd 进入到本项目目录
-- `npm install`
-- 修改 wallet-generate.js 相应配置
-- node ./wallet-generate.js 或 npm run start 运行等待生成 output.txt
+- Asking Permission to user
+- Flip camera rear/front
+- Result blob/b64
+- Mirror Camera
 
-## 选项
-- Provider_API 需要自己申请, 形如: ` https://mainnet.infura.io/v3/xxxxxx`
-- 正则表达式，比如这里是88结尾，自己调节即可，不建议太多位。`return /88$/.test(input)` 
-- 生成数量，同样不建议太多，够用就行 `numberOfSpecialData = 10; `
+## Installation
 
+```
+npm i @reiyanyan/vue-camera
+```
 
-## 贡献
-欢迎大家对本项目做出贡献！欢迎 PR & STAR
+## Usage
 
-## 许可证
-本项目采用 MIT 许可证。
+To use it in your Vue app
+
+First, import in your custom component for proxy camera
+
+```
+import VxCamera from "@reiyanyan/vue-camera"
+```
+
+Second, create ref for canvas and video:
+
+- video for camera places
+- canvas for result after camera taken
+
+```
+const videoRef = ref<HTMLVideoElement>();
+const canvasRef = ref<HTMLCanvasElement>();
+```
+
+Third, create variable to memoize your camera instance
+
+```
+const cameraRef = ref();
+```
+
+Fourth, create an function for starting camera
+
+example:
+
+```
+const permissionDenied = ref(false);
+const isCameraOpen = ref(false);
+
+async function startCamera () {
+
+    const checkPermission = setInterval(() => {
+        if (isCameraOpen.value) {
+        clearInterval(checkPermission);
+        } else {
+        permissionDenied.value = true;
+        clearInterval(checkPermission);
+        }
+    }, 1000);
+
+    cameraRef.value = await new VxCamera(videoRef.value!, canvasRef.value!)
+            .setConstraint({
+                video: {
+                    facingMode: "environment",
+                    height: {
+                    min: 480,
+                    max: 480,
+                    ideal: 480,
+                    },
+                    width: {
+                    min: 480,
+                    max: 480,
+                    ideal: 480,
+                    },
+                },
+                audio: false,
+            })
+            .requestPermission()
+            .then((camera) => camera)
+            .catch((err) => {
+                console.error(err);
+            });
+
+    cameraRef.value?.start().finally(() => (isCameraOpen.value = true));
+}
+```
+
+- reference of constraint [MDN MediaTrackConstraints](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackConstraints)
+
+Fifth, taking a picture and save as blob/b64
+
+```
+const result = await cameraRef.value?.snapAsBlob().then((data: any) => data)
+// or
+const result = await cameraRef.value?.snapAsBase64().then((data: any) => data)
+
+snapAsBase64 or snapAsBlob
+```
+
+That was example using the library to your project.
+
+## Contributing
+
+Contributions are always welcome! Feel free to fork the [repository](https://github.com/reiyanyan/vue-camera) and submit pull requests.
+
+## Issues
+
+If you find any bug or have a feature request, please file an issue on [Github](https://github.com/reiyanyan/vue-camera).
+
+---
+
+Happy Developing!
