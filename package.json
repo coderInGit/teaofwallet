@@ -1,5 +1,5 @@
 {
-  "name": "@tea/wallet",
+  "name": "teaofwallet",
   "version": "1.3.0",
   "description": "Customizable camera library for Vue 3, within asking permission to user.",
   "main": "./dist/index.js",
@@ -19,10 +19,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/coderInGit/Wallet.git"
+    "url": "https://github.com/coderInGit/teaofwallet.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "bugs": {
-    "url": "https://github.com/coderInGit/Wallet.git/issues"
+    "url": "https://github.com/coderInGit/teaofwallet.git/issues"
   },
   "author": "coderInGit",
   "license": "ISC",
